@@ -17,12 +17,36 @@ public class GuessTheNumberGame {
 
     //methods
     public void Start(){
-
+        ShowMenu();
     }
+
+    /*
+     * How the Menu should look:
+     * "|____________________________________________________|"
+     * "|                                                    |"
+     * "|  1: Easy                                           |"
+     * "|                                                    |"
+     * "|  2: Normal                                         |"
+     * "|                                                    |"
+     * "|  3: Hard                                           |"
+     * "|                                                    |"
+     * "|  0: Exit                                           |"
+     * "|____________________________________________________|"
+     */
     private int ShowMenu(){
+         System.out.println("|____________________________________________________|");
+         System.out.println("|                                                    |");
+         System.out.println("|  1: Easy                                           |");
+         System.out.println("|                                                    |");
+         System.out.println("|  2: Normal                                         |");
+         System.out.println("|                                                    |");
+         System.out.println("|  3: Hard                                           |");
+         System.out.println("|                                                    |");
+         System.out.println("|  0: Exit                                           |");
+         System.out.println("|____________________________________________________|");
         return 0; //do this later
     }
-    private int ShowMenu(int rangeOption){
+    private int Setup(int rangeOption){
         return 0; //do this later
     }
     private int Play(int secretNumber){
