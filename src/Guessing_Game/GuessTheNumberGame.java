@@ -9,7 +9,7 @@ import java.util.logging.ConsoleHandler;
 public class GuessTheNumberGame {
     //Fields
     private int guessCount = 0;
-    private int input = 100; //changed to int from String because in Java scanner can read the nextInt()
+    private String input = new String(); // new String seems the same as String.empty()
     private RangedRandomInteger secretNumberGenerator = new RangedRandomInteger(); //default constructor
 
     //Constants:
@@ -28,22 +28,23 @@ public class GuessTheNumberGame {
 
     //methods
     public void Start(){
-        ShowMenu();
+        boolean wantsToPlay = true;
+        do {
+            ShowMenu();
+
+            if(Integer.parseInt(input) == 0){ //the player chose to exit the game
+                break; //break out of the do while loop
+            }
+                Scanner userChoice = new Scanner(System.in);
+                input = userChoice.next(); //validation done by next line for valid strings
+                if(input.equalsIgnoreCase("N")){
+                    wantsToPlay = false;
+                }
+//            if(input)
+        } while(wantsToPlay);
     }
 
-    /*
-     * How the Menu should look:
-     * "|____________________________________________________|"
-     * "|                                                    |"
-     * "|  1: Easy                                           |"
-     * "|                                                    |"
-     * "|  2: Normal                                         |"
-     * "|                                                    |"
-     * "|  3: Hard                                           |"
-     * "|                                                    |"
-     * "|  0: Exit                                           |"
-     * "|____________________________________________________|"
-     */
+    //THE SHOW menu method used to start the game (initially or again)
     private int ShowMenu(){
 
         //first show the menu
@@ -60,30 +61,20 @@ public class GuessTheNumberGame {
 
          //now read in the user input using a scanner object
         //taken from the MAD9021 brightspace ported to Java
-        Scanner reader = new Scanner(System.in);
-//        int choice = 100; //not 0 - 3 //do not need to use choice
+//        Scanner reader = new Scanner(System.in);
+        int choice = 100; //not 0 - 3 //do not need to use choice
         boolean validInput = false;
         do {
             System.out.print("\nEnter Choice: ");
-            try {
-                input = reader.nextInt();
-            } catch (InputMismatchException err) {
-                System.out.println("Invalid input: " + err.getMessage());
-                reader.next(); //clear out the input to avoid infinite scanner loop
-            } catch (Exception err){
-                System.out.println("Error: " + err.getMessage());
-                reader.next(); //clear out the input to avoid infinite scanner loop
-            }
-            validInput = (input >= MIN_MENU) && (input <= MAX_MENU); //verify the range
+            choice = getGameInput();
+            validInput = (choice >= MIN_MENU) && (choice <= MAX_MENU); //verify the range
             if(!validInput) {
                 System.out.println("Please Enter  0, 1, 2 or 3:");
             }
         } while(!validInput);
 
-        System.out.println("You chose: " + input);
-
         //now lets generate the random num with setup and play the game
-        Play(Setup(input));
+        Play(Setup(choice));
 
         return 0; //do this later
     }
@@ -115,33 +106,57 @@ public class GuessTheNumberGame {
         return secretNumberGenerator.generateRandomNumber(); //do this later
     }
     private void Play(int secretNumber){
-        System.out.println("The Random Number is: " + secretNumber);
 
+        if(secretNumber == 0){ //the player chose 0, exit the game
+            return;
+        }
+        System.out.println("The Random Number is: " + secretNumber);
         //now read in the user input using a scanner object
         //taken from the MAD9021 brightspace ported to Java
-        Scanner reader = new Scanner(System.in);
-        boolean validInput = false;
+//        Scanner reader = new Scanner(System.in);
+//        boolean validInput = false;
+        int playerInput = 100; //not 0 - 3
         do {
             System.out.print("\nGuess the Number: ");
-            try {
-                input = reader.nextInt();
-            } catch (InputMismatchException err) {
-                System.out.println("Invalid input: " + err.getMessage());
-                reader.next(); //clear out the input to avoid infinite scanner loop
-            } catch (Exception err){
-                System.out.println("Error: " + err.getMessage());
-                reader.next(); //clear out the input to avoid infinite scanner loop
-            }
+//            try {
+//                input = reader.nextInt();
+//            } catch (InputMismatchException err) {
+//                System.out.println("Invalid input: " + err.getMessage());
+//                reader.next(); //clear out the input to avoid infinite scanner loop
+//            } catch (Exception err){
+//                System.out.println("Error: " + err.getMessage());
+//                reader.next(); //clear out the input to avoid infinite scanner loop
+//            }
+            playerInput = getGameInput();
             guessCount ++;
 //            validInput = (input == secretNumber); //verify the number matches
             //check if the input is higher or lower, if equal loop will break
-            if(input > secretNumber) {
+            if(playerInput > secretNumber) {
                 System.out.println("TOO HIGH:\t\t Guess count: " + guessCount);
-            } else if (input < secretNumber){
+            } else if (playerInput < secretNumber){
                 System.out.println("TOO LOW\t\t Guess count: " + guessCount);
             }
-        } while(input != secretNumber);
+        } while(playerInput != secretNumber);
         //they did it the user beat the game this time
+        System.out.print("\nCongratulations You Won the Game, \n\t\t\t Play Again? (y/n): ");
+    }
+
+    //helper method to get the user input instead of repeating the try catch each time
+    //only used for getting numerical input used for game
+    private int getGameInput(){
+        Scanner reader = new Scanner(System.in);
+        int chosenNumberOption = 100; //not 0 - 3
+        try {
+            input = reader.nextLine();
+            chosenNumberOption = Integer.parseInt(input);
+        } catch (InputMismatchException err) {
+            System.out.println("Invalid input: " + err.getMessage());
+//            reader.next(); //clear out the input to avoid infinite scanner loop
+        } catch (Exception err){
+            System.out.println("Error: " + err.getMessage());
+//            reader.next(); //clear out the input to avoid infinite scanner loop
+        }
+        return chosenNumberOption; // to do later
     }
 
 }
