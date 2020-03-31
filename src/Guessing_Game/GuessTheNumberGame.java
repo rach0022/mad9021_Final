@@ -35,11 +35,11 @@ public class GuessTheNumberGame {
             if(Integer.parseInt(input) == 0){ //the player chose to exit the game
                 break; //break out of the do while loop
             }
-                Scanner userChoice = new Scanner(System.in);
-                input = userChoice.next(); //validation done by next line for valid strings
-                if(input.equalsIgnoreCase("N")){
-                    wantsToPlay = false;
-                }
+            Scanner userChoice = new Scanner(System.in);
+            input = userChoice.next(); //validation done by next line for valid strings
+            if(input.equalsIgnoreCase("N")){
+                wantsToPlay = false;
+            }
 //            if(input)
         } while(wantsToPlay);
     }
@@ -138,7 +138,7 @@ public class GuessTheNumberGame {
             }
         } while(playerInput != secretNumber);
         //they did it the user beat the game this time
-        System.out.print("\nCongratulations You Won the Game, \n\t\t\t Play Again? (y/n): ");
+        System.out.print("\nCongratulations You Won the Game!\n\t\t\t Total Guesses: " + guessCount +" \n\t\t\t Play Again? (y/n): ");
     }
 
     //helper method to get the user input instead of repeating the try catch each time
