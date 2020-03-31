@@ -8,6 +8,7 @@ public class GuessTheNumberGame {
     private int guessCount = 0;
     private String input = new String(); // new String seems the same as String.empty()
     private RangedRandomInteger secretNumberGenerator = new RangedRandomInteger(); //default constructor
+    private Scanner reader = new Scanner(System.in);
 
     //Constants:
     private final int MAX_MENU = 3;
@@ -145,7 +146,7 @@ public class GuessTheNumberGame {
     //helper method to get the user input instead of repeating the try catch each time
     //only used for getting numerical input used for game
     private int getGameInput(){
-        Scanner reader = new Scanner(System.in);
+//        Scanner reader = new Scanner(System.in);
         int chosenNumberOption = 100; //not 0 - 3
         try {
             input = reader.nextLine();
