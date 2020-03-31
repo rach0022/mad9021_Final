@@ -1,10 +1,7 @@
 package Guessing_Game;
 
-import java.nio.BufferOverflowException;
 import java.util.InputMismatchException;
 import java.util.Scanner;
-import java.util.Set;
-import java.util.logging.ConsoleHandler;
 
 public class GuessTheNumberGame {
     //Fields
@@ -46,18 +43,22 @@ public class GuessTheNumberGame {
 
     //THE SHOW menu method used to start the game (initially or again)
     private int ShowMenu(){
-
-        //first show the menu
-         System.out.println("|____________________________________________________|");
-         System.out.println("|                                                    |");
-         System.out.println("|  1: Easy                                           |");
-         System.out.println("|                                                    |");
-         System.out.println("|  2: Normal                                         |");
-         System.out.println("|                                                    |");
-         System.out.println("|  3: Hard                                           |");
-         System.out.println("|                                                    |");
-         System.out.println("|  0: Exit                                           |");
-         System.out.println("|____________________________________________________|");
+        //first clear the screen
+        for(int i = 0; i < 40; i++){
+            System.out.println(); //for now i will just print 40 lines until i ask tony
+        }
+        //then show the menu
+        System.out.println("|____________________________________________________|");
+        System.out.println("| Choose Game Mode:                                  |");
+        System.out.println("|                                                    |");
+        System.out.println("|  1: Easy                             1 to 20       |");
+        System.out.println("|                                                    |");
+        System.out.println("|  2: Normal                           1 to 100      |");
+        System.out.println("|                                                    |");
+        System.out.println("|  3: Hard                             1 to 1000     |");
+        System.out.println("|                                                    |");
+        System.out.println("|  0: Exit                                           |");
+        System.out.println("|____________________________________________________|");
 
          //now read in the user input using a scanner object
         //taken from the MAD9021 brightspace ported to Java
@@ -134,7 +135,7 @@ public class GuessTheNumberGame {
             if(playerInput > secretNumber) {
                 System.out.println("TOO HIGH:\t\t Guess count: " + guessCount);
             } else if (playerInput < secretNumber){
-                System.out.println("TOO LOW\t\t Guess count: " + guessCount);
+                System.out.println("TOO LOW:\t\t Guess count: " + guessCount);
             }
         } while(playerInput != secretNumber);
         //they did it the user beat the game this time
