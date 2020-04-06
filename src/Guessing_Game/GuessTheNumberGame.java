@@ -1,3 +1,13 @@
+/*************************
+ *
+ *  @description The Actual Guessing Game Class File
+ *
+ *  @author Ravi Chandra Rachamalla rach0022@algonquinlive.com
+ *
+ *  @version April 6, 2020
+ *
+ ***********************/
+
 package Guessing_Game;
 
 import java.util.InputMismatchException;
@@ -5,19 +15,19 @@ import java.util.Scanner;
 
 public class GuessTheNumberGame {
     //Fields
-    private int guessCount = 0;
+    private int guessCount = 0; //the number of guesses by the user
     private String input = new String(); // new String seems the same as String.empty()
     private RangedRandomInteger secretNumberGenerator = new RangedRandomInteger(); //default constructor
-    private Scanner reader = new Scanner(System.in);
+    private Scanner reader = new Scanner(System.in); //our scanner object that will read input
 
     //Constants:
-    private final int MAX_MENU = 3;
-    private final int MIN_MENU = 0;
+    private final int MAX_MENU = 3; //our max menu option
+    private final int MIN_MENU = 0; //our min menu option
 
-    private final int ABSOLUTE_MIN = 1;
-    private final int EASY_MODE = 20;
-    private final int MEDIUM_MODE = 100;
-    private final int HARD_MODE = 1000;
+    private final int ABSOLUTE_MIN = 1; //our absolute min value to guess
+    private final int EASY_MODE = 20; //our max guessing value for easy mode
+    private final int MEDIUM_MODE = 100; //our max guessing value for medium mode
+    private final int HARD_MODE = 1000; //our max value for hard mode
 
     //default constructor:
     GuessTheNumberGame(){
@@ -25,10 +35,12 @@ public class GuessTheNumberGame {
     }
 
     //methods
+    //our start method which is the only method that is public,
+    //will initilize the game and start the game loop
     public void Start(){
         boolean wantsToPlay = true;
         do {
-            ShowMenu();
+            Play(Setup(ShowMenu()));
 
             if(Integer.parseInt(input) == 0){ //the player chose to exit the game
                 break; //break out of the do while loop
@@ -40,9 +52,11 @@ public class GuessTheNumberGame {
             }
 //            if(input)
         } while(wantsToPlay);
+        System.out.println("Thanks for Playing!!");
     }
 
     //THE SHOW menu method used to start the game (initially or again)
+    //will print out the menu and take the user input to start the game
     private int ShowMenu(){
         //first clear the screen
         for(int i = 0; i < 40; i++){
@@ -52,11 +66,11 @@ public class GuessTheNumberGame {
         System.out.println("|____________________________________________________|");
         System.out.println("| Choose Game Mode:                                  |");
         System.out.println("|                                                    |");
-        System.out.println("|  1: Easy                             1 to 20       |");
+        System.out.println("|  1: Easy Mode                        1 to 20       |");
         System.out.println("|                                                    |");
-        System.out.println("|  2: Normal                           1 to 100      |");
+        System.out.println("|  2: Normal Mode                      1 to 100      |");
         System.out.println("|                                                    |");
-        System.out.println("|  3: Hard                             1 to 1000     |");
+        System.out.println("|  3: Hard Mode                        1 to 1000     |");
         System.out.println("|                                                    |");
         System.out.println("|  0: Exit                                           |");
         System.out.println("|____________________________________________________|");
@@ -76,26 +90,28 @@ public class GuessTheNumberGame {
         } while(!validInput);
 
         //now lets generate the random num with setup and play the game
-        Play(Setup(choice));
+//        Play(Setup(choice));
 
-        return 0; //do this later
+        return choice; //do this later
     }
 
+    //our private setup method that will setup each new instance of our "game" that will
+    //setup our guessing game again and again depending on which option the user selected
     private int Setup(int rangeOption){
         guessCount = 0; //reset the guess count while we are here "setting up"
         switch(rangeOption){
             case 0: //quit the game
                 return 0;
             case 1:
-                System.out.println("EASY MODE: case " + rangeOption);
+                System.out.println("EASY MODE");
                 secretNumberGenerator.setMaximum(EASY_MODE);
                 break;
             case 2:
-                System.out.println("MEDIUM MODE: case " + rangeOption);
+                System.out.println("MEDIUM MODE");
                 secretNumberGenerator.setMaximum(MEDIUM_MODE);
                 break;
             case 3:
-                System.out.println("HARD MODE: case " + rangeOption);
+                System.out.println("HARD MODE");
                 secretNumberGenerator.setMaximum(HARD_MODE);
                 break;
             default:
@@ -112,7 +128,7 @@ public class GuessTheNumberGame {
         if(secretNumber == 0){ //the player chose 0, exit the game
             return;
         }
-        System.out.println("The Random Number is: " + secretNumber);
+//        System.out.println("The Random Number is: " + secretNumber); //turn on if testing
         //now read in the user input using a scanner object
         //taken from the MAD9021 brightspace ported to Java
 //        Scanner reader = new Scanner(System.in);
